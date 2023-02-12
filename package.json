@@ -9,9 +9,11 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "eas-cli": "^3.5.2",
     "expo": "~47.0.12",
     "expo-linear-gradient": "~12.0.1",
     "expo-status-bar": "~1.4.2",
+    "expo-updates": "~0.15.6",
     "lottie-react-native": "5.1.4",
     "react": "18.1.0",
     "react-native": "0.70.5",
