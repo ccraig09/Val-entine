@@ -18,14 +18,23 @@ const { width, height } = Dimensions.get("window");
 export default function App() {
   const animation = useRef(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scrollView = useRef(new Animated.Value(width)).current;
   const [page, setPage] = useState(0);
   const SPACING_FOR_CARD_INSET = Dimensions.get("window").width * 0.1 - 10;
 
   const pages = [
-    { text: "You are the cause of smiles \n every day" },
-    { text: "so so much" },
-    { text: "so so much" },
-    { text: "so so much" },
+    {
+      text: "You are the reason I smile \n The only girl I want to dial \n The type of girl \n that I'd check out twice down an isle \n and for a while \n I doubted I'd ever find some one\n that can upgrade my style \n and make it so versatile",
+    },
+    {
+      text: "And that's because You are amazing\n everything you do\n keeps me gazing\n I hope one day it's my kids\n you'll be rasing\n and it goes without saying\n that body is blazing\n",
+    },
+    {
+      text: "That's surely because You are\n a thing of beauty\n even though you a cutie\n it's kinda hot when you're moody\n sometimes idek why you're into me\n but to love and protect you\n will forever be my duty",
+    },
+    {
+      text: "You are this and that\n you'd be my first tat\n You are the complete package\n ",
+    },
     { text: "so so much" },
     { text: "so so much" },
     { text: "so so much" },
@@ -33,11 +42,15 @@ export default function App() {
     { text: "so so much" },
   ];
 
-  const scrollView = useRef();
   useEffect(() => {
     if (page > 0) {
       Animated.timing(fadeAnim, {
         toValue: 1,
+        duration: 1000,
+        useNativeDriver: false,
+      }).start();
+      Animated.timing(scrollView, {
+        toValue: 0,
         duration: 1000,
         useNativeDriver: false,
       }).start();
@@ -86,14 +99,12 @@ export default function App() {
         )}
         {page > 0 && (
           <Animated.ScrollView
-            style={{ opacity: fadeAnim }}
+            style={{ opacity: fadeAnim, marginLeft: scrollView }}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            ref={Animated.scrollView}
             horizontal
-            // onsc={}
             pagingEnabled
-            snapToInterval={width * 0.8 + 10}
+            snapToInterval={width * 0.85 + 10}
             snapToAlignment={"center"}
             decelerationRate={"fast"}
             contentInset={{
@@ -105,13 +116,16 @@ export default function App() {
           >
             {pages.map((page, index) => (
               <View key={index} style={styles.textContainer}>
-                <View>
-                  <Text style={{ textAlign: "center" }}>{page.text}</Text>
+                <View style={styles.poemTextContainer}>
+                  <Text style={styles.poemText}>{page.text}</Text>
                 </View>
-                <View style={{}}>
+                <View style={styles.buttonContainer}>
                   <Text>
                     {index + 1} / {pages.length}
                   </Text>
+                  <View style={{ marginTop: 30 }}>
+                    <Button title="Home" onPress={() => setPage(0)} />
+                  </View>
                 </View>
               </View>
             ))}
@@ -136,8 +150,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   textContainer: {
-    width: width * 0.8,
-    height: 500,
+    width: width * 0.85,
+    height: height * 0.6,
     borderRadius: 10,
     borderStyle: "dotted",
     borderWidth: 1,
@@ -145,5 +159,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F5F5DC",
     margin: 5,
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  poemTextContainer: {
+    height: height * 0.4,
+  },
+  poemText: {
+    textAlign: "center",
+    lineHeight: 40,
+    fontWeight: "bold",
+    fontSize: 20,
+    fontFamily: "Noteworthy-Bold",
   },
 });
